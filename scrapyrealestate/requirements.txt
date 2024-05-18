@@ -1,10 +1,12 @@
 ###### Requirements without __version__ Specifiers ######
+playwright
 beautifulsoup4
 PyYAML
 art
 scrapy
 scrapy_useragents
 scrapy-rotating-proxies
+scrapy-playwright
 requests
 pyTelegramBotAPI
 requests_html
