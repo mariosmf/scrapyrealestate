@@ -1,8 +1,8 @@
-FROM python:3.10-alpine
+FROM python:3.12
 
 # Adding git, bash and openssh to the image
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash curl
+RUN apt update && apt upgrade && \
+    apt install bash curl
 
 # Change localtime
 RUN cp /usr/share/zoneinfo/Europe/Andorra /etc/localtime
@@ -15,7 +15,9 @@ WORKDIR /scrapyrealestate/scrapyrealestate/
 
 # upgrade pip and install requirements
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
+RUN playwright install
+RUN playwright install-deps
 
 EXPOSE 8080
 
