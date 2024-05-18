@@ -1,5 +1,6 @@
 ###### Requirements without __version__ Specifiers ######
 playwright
+lxml-html-clean
 beautifulsoup4
 PyYAML
 art
