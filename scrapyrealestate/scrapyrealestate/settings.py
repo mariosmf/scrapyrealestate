@@ -32,7 +32,8 @@ DOWNLOAD_HANDLERS = {
 }
 
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-PLAYWRIGHT_BROWSER_TYPE = 'chromium'
+PLAYWRIGHT_BROWSER_TYPE = 'firefox'
+
 
 PROXY_POOL_ENABLED = True
 PROXY_POOL_FORCE_REFRESH= True
