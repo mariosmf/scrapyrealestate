@@ -26,6 +26,14 @@ DOWNLOADER_MIDDLEWARES = {
     'rotating_proxies.middlewares.BanDetectionMiddleware': 620
 }
 
+DOWNLOAD_HANDLERS = {
+    "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+    "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+}
+
+TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+PLAYWRIGHT_BROWSER_TYPE = 'chromium'
+
 PROXY_POOL_ENABLED = True
 PROXY_POOL_FORCE_REFRESH= True
 PROXY_POOL_PAGE_RETRY_TIMES = 2
@@ -33,6 +41,7 @@ PROXY_POOL_TRY_WITH_HOST = True
 
 # Minimum level to log. Available levels are: CRITICAL, ERROR, WARNING, INFO, DEBUG.
 LOG_LEVEL = 'WARNING'
+COOKIES_ENABLED = True
 
 #PROXY_POOL_ENABLED = True
 

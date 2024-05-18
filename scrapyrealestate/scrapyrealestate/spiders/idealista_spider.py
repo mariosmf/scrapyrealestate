@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 #from items import ScrapyrealestateItem # ERROR (es confundeix amb items al 192.168.1.100)
 from scrapyrealestate.items import ScrapyrealestateItem
 
-class IdealistaSpider(CrawlSpider):
+class IdealistaSpider(scrapy.Spider):
     name = "idealista"
     allowed_domains = ["idealista.com"]
     total_time = 0
@@ -15,36 +15,19 @@ class IdealistaSpider(CrawlSpider):
 
     def start_requests(self):
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
-        yield scrapy.Request(f'{self.start_urls}')
+        yield scrapy.Request(f'{self.start_urls}',meta={
+                    'playwright': True,
+                },headers={
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                    "Accept-Encoding": "gzip, deflate, br, zstd",
+                    "Accept-Language": "es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,gl;q=0.5",
+                    "Cache-Control": "no-cache",
+                    "Pragma": "no-cache",
+                    "Upgrade-Insecure-Requests": "1",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0"
+                } )
 
     total_urls_pass = 1  # Inicialitzem contador
-
-    custom_settings = {
-        'DEFAULT_REQUEST_HEADERS': {
-            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'es-ES,es;q=0.9,ca;q=0.8,en;q=0.7',
-            'cache-control': 'max-age=0',
-            'sec-fetch-dest': 'document',
-            'sec-fetch-mode': 'navigate',
-            'sec-fetch-site': 'none',
-            'sec-fetch-user': '?1',
-            'sec-gpc': '1',
-            'upgrade-insecure-requests': '1',
-            #'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
-
-    }
-    }
-
-    # Si esta activat el mode rapid, NO agafem la seguent URL
-    '''if not data['speed_mode']:
-        rules = (
-            # Filter all the flats paginated by the website following the pattern indicated
-            Rule(LinkExtractor(restrict_xpaths=("//a[@class='icon-arrow-right-after']")),
-                 callback='parse',  # cridem la funcio parse de nou
-                 follow=True),  # Seguim l'enllaç
-        )'''
 
     def parse(self, response):
         start_time = time.time()
@@ -61,7 +44,6 @@ class IdealistaSpider(CrawlSpider):
 
         # Agafem els div de tots els habitatges de la pàgina
         flats = soup.find_all("div", {"class": "item-info-container"})
-
         # Obtenim si es de lloguer o compra a partir de la url
         if self.start_urls.split('/')[3].split('-')[0] == 'alquiler':
             type = 'rent'
