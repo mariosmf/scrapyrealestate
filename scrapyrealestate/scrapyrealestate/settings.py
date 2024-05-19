@@ -10,6 +10,10 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 
+from wsgiref.headers import Headers
+from scrapy import Request
+
+
 BOT_NAME = 'scrapyrealestate'
 
 SPIDER_MODULES = ['scrapyrealestate.spiders']
@@ -32,17 +36,41 @@ DOWNLOAD_HANDLERS = {
 }
 
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-PLAYWRIGHT_BROWSER_TYPE = 'firefox'
+PLAYWRIGHT_BROWSER_TYPE = 'webkit'
+
+
+PLAYWRIGHT_LAUNCH_OPTIONS = {
+    "headless": True,
+    "timeout": 20 * 1000, 
+}
 
 
 PROXY_POOL_ENABLED = True
 PROXY_POOL_FORCE_REFRESH= True
-PROXY_POOL_PAGE_RETRY_TIMES = 2
+PROXY_POOL_PAGE_RETRY_TIMES = 1
 PROXY_POOL_TRY_WITH_HOST = True
 
 # Minimum level to log. Available levels are: CRITICAL, ERROR, WARNING, INFO, DEBUG.
 LOG_LEVEL = 'WARNING'
 COOKIES_ENABLED = True
+
+
+
+DEFAULT_REQUEST_HEADERS = {
+    # we should use headers
+    'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.38 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Language': 'es',
+    'Accept-Encoding': 'gzip, deflate, br, zstd',
+    'Connection': 'keep-alive',
+    'Sec-Ch-Ua': '\"Chromium\";v=\"124\", \"Microsoft Edge\";v=\"124\", \"Not-A.Brand\";v=\"99\"',
+    'Sec-Ch-Ua-Platform': '\"Windows\"',
+    'TE': 'Trailers',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+}
+
 
 #PROXY_POOL_ENABLED = True
 
@@ -55,7 +83,7 @@ COOKIES_ENABLED = True
 #USER_AGENT = 'scrapyrealestate (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-# ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
