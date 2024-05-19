@@ -17,21 +17,19 @@ Este programa en Python escrapea varios portales inmobiliarios y posteriormente 
   - Ahora tenemos dos opciones (los comandos repetidos son para dispositivos arm -raspberry o similar de 64bits-):
     - Descargamos la imagen y la ejecutamos manualmente.
       ```
-      docker pull mferark/scrapyrealestate:latest
-      docker pull mferark/scrapyrealestate:arm-latest
-      docker run -d -p 8080:8080 --name scrapyrealestate --restart=always mferark/scrapyrealestate:amd64-latest
-      docker run -d -p 8080:8080 --name scrapyrealestate-arm --restart=always mferark/scrapyrealestate:arm64-latest
+      docker pull ghcr.io/jrmougan/scrapyrealestate:latest
+
+      docker run -d -p 8080:8080 --name scrapyrealestate --restart=always ghcr.io/jrmougan/scrapyrealestate:latest
       ```
       - También podemos ejecutar otra instancia usando otro puerto
       ```
-      docker run -d -p 8081:8080 --name scrapyrealestate mferark/scrapyrealestate:amd64-latest
-      docker run -d -p 8081:8080 --name scrapyrealestate-arm mferark/scrapyrealestate:arm64-latest
+      docker run -d -p 8081:8080 --name scrapyrealestate ghcr.io/jrmougan/scrapyrealestate:latest
+
       ```
     - O bien, usando docker-compose (a veces hay que instalarlo por separado de docker).
       - Descargamos el archivo docker-compose.yaml en un directorio nuevo.
         ```
-        curl -o docker-compose.yaml https://raw.githubusercontent.com/mferark/scrapyrealestate/master/docker-compose.yaml
-        curl -o docker-compose.yaml https://raw.githubusercontent.com/mferark/scrapyrealestate/master/docker-compose-arm.yaml
+        curl -o docker-compose.yaml https://raw.githubusercontent.com/jrmougan/scrapyrealestate/master/docker-compose.yaml
         ```
       - Bajamos la ultima imagen
         ```
