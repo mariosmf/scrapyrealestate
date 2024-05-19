@@ -525,6 +525,7 @@ def scrap_realestate(db_client, telegram_msg):
     filedata = filedata.replace('\n][', ',')
     filedata = re.sub('\n,\n', '', filedata)
     filedata = re.sub(',\n\n', '', filedata)
+    filedata = re.sub(',\n]', ']', filedata)
     # Write the file out again
     with open(f'./data/{scrapy_rs_name}.json', 'w') as file:
         file.write(filedata)
