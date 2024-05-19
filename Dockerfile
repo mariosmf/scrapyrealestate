@@ -1,4 +1,5 @@
 FROM python:3.12
+LABEL org.opencontainers.image.source=https://github.com/jrmougan/scrapyrealestate
 
 # Adding git, bash and openssh to the image
 RUN apt update && apt upgrade && \
