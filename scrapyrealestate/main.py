@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import re
 import sys, subprocess, telebot, time, os.path, platform, os, logging, uuid, urllib.request, json, random
 import scrapyrealestate.db_module as db_module
 from os import path
@@ -522,6 +523,8 @@ def scrap_realestate(db_client, telegram_msg):
 
     # Replace the target string
     filedata = filedata.replace('\n][', ',')
+    filedata = re.sub('\n,\n', '', filedata)
+    filedata = re.sub(',\n\n', '', filedata)
     # Write the file out again
     with open(f'./data/{scrapy_rs_name}.json', 'w') as file:
         file.write(filedata)
