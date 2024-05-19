@@ -6,8 +6,8 @@ RUN apt update && apt upgrade && \
     apt install bash curl
 
 # Change localtime
-RUN cp /usr/share/zoneinfo/Europe/Andorra /etc/localtime
-RUN echo "Europe/Andorra" > /etc/timezone
+RUN cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+RUN echo "Europe/Madrid" > /etc/timezone
 
 # Copy script
 RUN mkdir /scrapyrealestate/
