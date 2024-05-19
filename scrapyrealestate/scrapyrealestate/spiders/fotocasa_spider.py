@@ -7,6 +7,25 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 #from items import ScrapyrealestateItem # ERROR (es confundeix amb items al 192.168.1.100)
 from scrapyrealestate.items import ScrapyrealestateItem
+from scrapy_playwright.page import PageMethod
+
+
+scrolling_script = """
+    const scrolls = 8
+    let scrollCount = 0
+    let height = 500
+    
+    // scroll down and then wait for 0.5s
+    const scrollInterval = setInterval(() => {
+      window.scrollTo(0, height)
+      scrollCount++
+      height += 500
+    
+      if (scrollCount === numScrolls) {
+        clearInterval(scrollInterval)
+      }
+    }, 500)
+    """
 
 
 class FotocasaSpider(scrapy.Spider):
@@ -20,11 +39,18 @@ class FotocasaSpider(scrapy.Spider):
 
         yield scrapy.Request(self.start_urls,meta={
                     'playwright': True,
-                    'playwright_include_page': True,
-                    'playwright_viewport_size': '1920,1080',
+                    'playwright_viewport_size': '1740,434',
+                    'playwright_page_methods':[
+                    PageMethod("wait_for_selector", '#didomi-notice-agree-button'),
+                    PageMethod("click", '#didomi-notice-agree-button'),
+                    PageMethod("wait_for_selector", "main.re-SearchPage-wrapper"),
+                    PageMethod("evaluate", scrolling_script),
+                    PageMethod("wait_for_selector", "article:nth-child(10)"),  # 10 per page
+                ],
+
                     
                 } )
-        
+           
 
     def parse(self, response):
         # Import items
@@ -42,7 +68,7 @@ class FotocasaSpider(scrapy.Spider):
         # flats = response.css('div.item-info-container')
         # div --> class="item-info-container"
         # flats = soup.find_all("div", {"class": "re-Searchresult-itemRow"})
-        flats = soup.find_all("article", {"class": "re-CardPackAdvance"})  # Canvi de div - 10/11/2021
+        flats = soup.find_all("article")  # Canvi de div - 10/11/2021
         logging.warning(f'flats: {len(flats)}')
 
         # div --> class="pagination" --> ul --> li --> class="next"
