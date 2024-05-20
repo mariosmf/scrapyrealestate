@@ -586,8 +586,11 @@ def init():
         #    pass
 
         count += 1  # Sumem 1 cicle
-        logger.info(f"SLEEPING {data['time_update']} SECONDS")
-        time.sleep(int(data['time_update']))
+        #random sleep time
+        rndtime = random.randint(3, 40) + int(data['time_update'])
+
+        logger.info(f"SLEEPING {rndtime} SECONDS")
+        time.sleep(rndtime)
 
 
 if __name__ == "__main__":
