@@ -7,6 +7,8 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 #from items import ScrapyrealestateItem # ERROR (es confundeix amb items al 192.168.1.100)
 from scrapyrealestate.items import ScrapyrealestateItem
+from fake_useragent import UserAgent
+
 
 class IdealistaSpider(scrapy.Spider):
     name = "idealista"
@@ -14,13 +16,16 @@ class IdealistaSpider(scrapy.Spider):
     total_time = 0
     #start_urls = data['idealista_data']['urls']
 
+    ua = UserAgent()
+    useragent = ua.random    
+
 
     def start_requests(self):
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
 
         yield scrapy.Request(f'{self.start_urls}',meta={
                     'playwright': True,
-                } )
+                }, headers={'User-Agent': self.useragent})
 
     total_urls_pass = 1  # Inicialitzem contador
 
