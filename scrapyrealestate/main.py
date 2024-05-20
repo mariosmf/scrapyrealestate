@@ -5,6 +5,8 @@ import scrapyrealestate.db_module as db_module
 from os import path
 from art import *
 from unidecode import unidecode
+from fake_useragent import UserAgent
+
 
 __author__ = "mferark"
 __license__ = "GPL"
@@ -306,6 +308,7 @@ def check_new_flats(json_file_name, scrapy_rs_name, min_price, max_price, tg_cha
         logger.warning(f'NO DATA IN JSON {scrapy_rs_name.upper()}')
     json_file.close()
 
+
     # open file and read the content in a list
     try:
         with open("./data/ids.json", "r") as outfile:
@@ -571,8 +574,18 @@ def init():
     while True:
         try:
             os.remove(f"./data/{scrapy_rs_name}.json")  # Eliminem l'arxiu json
+            os.remove('./data/useragent.txt')
+            
         except:
             pass
+
+            # useragent to file
+
+        with open('./data/useragent.txt', 'x') as f:
+            ua = UserAgent(platforms='pc', os=['windows', 'macos'])
+            f.write(ua.getChrome.get('useragent'))
+            f.close()
+
 
         # Si senf_first està activat o bé hem passat al segon cicle, canviem telegram_msg a true per enviar els missatges
         if send_first == 'True' or count > 0:

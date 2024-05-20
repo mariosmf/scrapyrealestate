@@ -14,7 +14,6 @@ from playwright.async_api import Request
 from scrapy.http.headers import Headers
 import playwright
 import scrapy
-from fake_useragent import UserAgent
 
 
 BOT_NAME = 'scrapyrealestate'
@@ -72,9 +71,17 @@ def custom_headers(
     playwright_request: playwright.async_api.Request,
     scrapy_headers: scrapy.http.headers.Headers,
 ) -> dict:
-    ua = UserAgent(platforms='pc', os=['windows', 'macos'])
+    file = open("./data/useragent.txt", "r")
+    useragent = file.read()
+    print(useragent)
+    file.close()
     
-    return {"User-Agent": ua.getChrome.get('useragent')}
+    return {"User-Agent":useragent,
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            }
 
 PLAYWRIGHT_PROCESS_REQUEST_HEADERS = custom_headers
 
