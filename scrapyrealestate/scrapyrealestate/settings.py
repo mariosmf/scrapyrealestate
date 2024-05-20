@@ -10,8 +10,11 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 
-from wsgiref.headers import Headers
-from scrapy import Request
+from playwright.async_api import Request
+from scrapy.http.headers import Headers
+import playwright
+from fake_useragent import UserAgent
+import scrapy
 
 
 BOT_NAME = 'scrapyrealestate'
@@ -54,22 +57,18 @@ PROXY_POOL_TRY_WITH_HOST = True
 LOG_LEVEL = 'WARNING'
 COOKIES_ENABLED = True
 
+def custom_headers(
+    browser_type: str,
+    playwright_request: Request,
+    scrapy_headers: Headers,
+) -> dict:
+    ua=UserAgent()
+    userAgent = ua.getEdge
+    return  {"User-Agent": userAgent.get('useragent')}
+
+PLAYWRIGHT_PROCESS_REQUEST_HEADERS = custom_headers
 
 
-DEFAULT_REQUEST_HEADERS = {
-    # we should use headers
-    'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.38 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'Accept-Language': 'es',
-    'Accept-Encoding': 'gzip, deflate, br, zstd',
-    'Connection': 'keep-alive',
-    'Sec-Ch-Ua': '\"Chromium\";v=\"124\", \"Microsoft Edge\";v=\"124\", \"Not-A.Brand\";v=\"99\"',
-    'Sec-Ch-Ua-Platform': '\"Windows\"',
-    'TE': 'Trailers',
-    'Sec-Fetch-Dest': 'document',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'none',
-}
 
 
 #PROXY_POOL_ENABLED = True
