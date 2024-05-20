@@ -47,7 +47,7 @@ class FotocasaSpider(scrapy.Spider):
                     PageMethod("click", '#didomi-notice-agree-button'),
                     PageMethod("wait_for_selector", "main.re-SearchPage-wrapper"),
                     PageMethod("evaluate", scrolling_script),
-                    PageMethod("wait_for_selector", "article:nth-child(10)"),  # 10 per page
+                    PageMethod("wait_for_selector", "article:nth-child(20)"),  # 10 per page
                 ],   
                 })
            
