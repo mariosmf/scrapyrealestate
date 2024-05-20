@@ -8,13 +8,10 @@ from bs4 import BeautifulSoup
 #from items import ScrapyrealestateItem # ERROR (es confundeix amb items al 192.168.1.100)
 from scrapyrealestate.items import ScrapyrealestateItem
 from scrapy_playwright.page import PageMethod
-from fake_useragent import UserAgent
-
-
 
 
 scrolling_script = """
-    const scrolls = 12
+    const scrolls = 20
     let scrollCount = 0
     let height = 500
     
@@ -36,13 +33,6 @@ class FotocasaSpider(scrapy.Spider):
     name = "fotocasa"
     allowed_domains = ["fotocasa.es"]  
 
-    ua = UserAgent()
-
-
-    custom_settings = {
-        'USER_AGENT': ua.getEdge.get('useragent'),
-        'DOWNLOAD_DELAY': 0.5,
-    }
 
     
     def start_requests(self):
@@ -98,7 +88,13 @@ class FotocasaSpider(scrapy.Spider):
                 logging.warning(f'href: {href}')
 
             except:
-                break;  # Si no troba res sortim del bucle
+                try:
+                    href = flats[nflat].find("a", {"class": "re-CardPackMinimal-info"}, href=True)[
+                    'href']  # Canvi de div - 10/11/2021
+
+                except:
+
+                    break;  # Si no troba res sortim del bucle
 
             try:
                 title = flats[nflat].find("span", {"class": "re-CardTitle"}).text.strip()
