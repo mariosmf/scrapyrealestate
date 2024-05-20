@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 #from items import ScrapyrealestateItem # ERROR (es confundeix amb items al 192.168.1.100)
 from scrapyrealestate.items import ScrapyrealestateItem
 from scrapy_playwright.page import PageMethod
+from fake_useragent import UserAgent
 
 
 scrolling_script = """
@@ -32,6 +33,9 @@ class FotocasaSpider(scrapy.Spider):
     name = "fotocasa"
     allowed_domains = ["fotocasa.es"]
 
+    ua = UserAgent()
+    useragent = ua.random   
+
     
     def start_requests(self):
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
@@ -49,7 +53,7 @@ class FotocasaSpider(scrapy.Spider):
                 ],
 
                     
-                } )
+                }, headers={'User-Agent': self.useragent})
            
 
     def parse(self, response):
