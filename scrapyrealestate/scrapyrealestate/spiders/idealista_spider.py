@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 from scrapyrealestate.items import ScrapyrealestateItem
 
 from scrapy_playwright.page import PageMethod
+from fake_useragent import UserAgent
+
 
 
 
@@ -17,10 +19,20 @@ class IdealistaSpider(scrapy.Spider):
     allowed_domains = ["idealista.com"]
     total_time = 0
     #start_urls = data['idealista_data']['urls']
+
+    ua = UserAgent()
+
+    custom_settings = {
+        'USER_AGENT': ua.getEdge.get('useragent'),
+        'DOWNLOAD_DELAY': 0.5,
+        
+    }
+
    
 
 
     def start_requests(self):
+
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
         yield scrapy.Request(f'{self.start_urls}',meta={
                     'playwright': True,

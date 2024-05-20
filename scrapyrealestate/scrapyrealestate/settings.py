@@ -13,7 +13,6 @@
 from playwright.async_api import Request
 from scrapy.http.headers import Headers
 import playwright
-from fake_useragent import UserAgent
 import scrapy
 
 
@@ -57,16 +56,9 @@ PROXY_POOL_TRY_WITH_HOST = True
 LOG_LEVEL = 'WARNING'
 COOKIES_ENABLED = True
 
-def custom_headers(
-    browser_type: str,
-    playwright_request: Request,
-    scrapy_headers: Headers,
-) -> dict:
-    ua=UserAgent()
-    userAgent = ua.getEdge
-    return  {"User-Agent": userAgent.get('useragent')}
 
-PLAYWRIGHT_PROCESS_REQUEST_HEADERS = custom_headers
+
+
 
 
 
