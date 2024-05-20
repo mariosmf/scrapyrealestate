@@ -12,7 +12,7 @@ from scrapy_playwright.page import PageMethod
 
 
 scrolling_script = """
-    const scrolls = 8
+    const scrolls = 12
     let scrollCount = 0
     let height = 500
     
