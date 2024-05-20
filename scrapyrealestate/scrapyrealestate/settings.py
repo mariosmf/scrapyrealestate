@@ -47,6 +47,15 @@ PLAYWRIGHT_LAUNCH_OPTIONS = {
     "timeout": 20 * 1000, 
 }
 
+PLAYWRIGHT_CONTEXTS = {
+    "default": {
+        "viewport": {
+            "width": 1920,
+            "height": 1080,
+        },
+    },
+}
+
 
 PROXY_POOL_ENABLED = True
 PROXY_POOL_FORCE_REFRESH= True
@@ -63,9 +72,9 @@ def custom_headers(
     playwright_request: playwright.async_api.Request,
     scrapy_headers: scrapy.http.headers.Headers,
 ) -> dict:
-    ua = UserAgent()
+    ua = UserAgent(platforms='pc', os=['windows', 'macos'])
     
-    return {"User-Agent": ua.getRandom.get('useragent')}
+    return {"User-Agent": ua.getChrome.get('useragent')}
 
 PLAYWRIGHT_PROCESS_REQUEST_HEADERS = custom_headers
 

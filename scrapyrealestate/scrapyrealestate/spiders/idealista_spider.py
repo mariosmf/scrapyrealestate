@@ -25,7 +25,6 @@ class IdealistaSpider(scrapy.Spider):
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
         yield scrapy.Request(f'{self.start_urls}',meta={
                     'playwright': True,
-                    'playwright_viewport_size': '1740,434',
                     'playwright_page_methods':[
                     PageMethod("wait_for_selector", 'main.listing-items'),
                     ]

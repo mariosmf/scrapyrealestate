@@ -41,7 +41,6 @@ class FotocasaSpider(scrapy.Spider):
 
         yield scrapy.Request(self.start_urls,meta={
                     'playwright': True,
-                    'playwright_viewport_size': '1740,434',
                     'playwright_page_methods':[
                     PageMethod("wait_for_selector", '#didomi-notice-agree-button'),
                     PageMethod("click", '#didomi-notice-agree-button'),
@@ -93,8 +92,13 @@ class FotocasaSpider(scrapy.Spider):
                     'href']  # Canvi de div - 10/11/2021
 
                 except:
+                    try:
+                        href = flats[nflat].find("a", {"class": "re-CardPackPremium-carousel"}, href=True)[
+                            'href']  # Canvi de div - 10/11/2021
+                        
+                    except:
 
-                    break;  # Si no troba res sortim del bucle
+                        break;  # Si no troba res sortim del bucle
 
             try:
                 title = flats[nflat].find("span", {"class": "re-CardTitle"}).text.strip()
