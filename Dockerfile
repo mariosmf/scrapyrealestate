@@ -1,4 +1,4 @@
-FROM python:3.9-bullseye
+FROM python:3.9-slim-bullseye
 LABEL org.opencontainers.image.source=https://github.com/jrmougan/scrapyrealestate
 
 # Adding git, bash and openssh to the image
