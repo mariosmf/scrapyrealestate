@@ -20,6 +20,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
+
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
@@ -27,12 +32,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/${{github.actor}}/scrapyrealestate:latest
-
-      - name: Build Docker image ARM
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/arm64
-          push: true
-          tags: ghcr.io/${{github.actor}}/scrapyrealestate:arm-latest
+          platforms: linux/arm64, linux/amd64
