@@ -574,17 +574,23 @@ def init():
     while True:
         try:
             os.remove(f"./data/{scrapy_rs_name}.json")  # Eliminem l'arxiu json
-            os.remove('./data/useragent.txt')
             
         except:
             pass
 
             # useragent to file
 
-        with open('./data/useragent.txt', 'x') as f:
-            ua = UserAgent(platforms='pc', os=['windows', 'macos'])
-            f.write(ua.getChrome.get('useragent'))
-            f.close()
+        # Cada 10 ciclos cambiamos el useragent
+        if (count % 10 == 0 or count == 0):
+            logging.info('Changing useragent')
+            try:
+                os.remove('./data/useragent.txt')
+            except:
+                pass
+            with open('./data/useragent.txt', 'x') as f:
+                ua = UserAgent(platforms='pc', os=['windows', 'macos'])
+                f.write(ua.getChrome.get('useragent'))
+                f.close()
 
 
         # Si senf_first està activat o bé hem passat al segon cicle, canviem telegram_msg a true per enviar els missatges
