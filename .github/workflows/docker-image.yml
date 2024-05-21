@@ -25,6 +25,14 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{github.actor}}/scrapyrealestate:latest
+
+      - name: Build Docker image ARM
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: ghcr.io/${{github.actor}}/scrapyrealestate:arm-latest
