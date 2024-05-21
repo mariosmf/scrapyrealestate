@@ -10,7 +10,7 @@ from fake_useragent import UserAgent
 
 __author__ = "mferark"
 __license__ = "GPL"
-__version__ = "2.0.5"
+__version__ = "3.0.0"
 
 def init_logs():
     global logger
@@ -540,7 +540,7 @@ def scrap_realestate(db_client, telegram_msg):
                                 data['max_price'],
                                 data['telegram_chatuserID'],
                                 db_client,
-                                'sr_flats',
+                                f"scrapyrealestate{__version__.replace('.', '')}",
                                 telegram_msg,
                                 logger)
 
@@ -548,9 +548,9 @@ def scrap_realestate(db_client, telegram_msg):
 def init():
     global config_db_mongodb
     config_db_mongodb = {
-        'db_user': "scrapyrealestate",
-        'db_password': "23sjz0UJdfRwsIZm",
-        'db_host': "scrapyrealestate.sk0pae1.mongodb.net",
+        'db_user': "scrapyuser",
+        'db_password': "patatasconjamon",
+        'db_host': "cluster0.3v9ozgk.mongodb.net",
         'db_name': f"scrapyrealestate{__version__.replace('.', '')}",
     }
     print('LOADING...')
