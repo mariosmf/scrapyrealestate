@@ -2,8 +2,7 @@ FROM python:3.9-slim-bullseye
 LABEL org.opencontainers.image.source=https://github.com/jrmougan/scrapyrealestate
 
 # Adding git, bash and openssh to the image
-RUN apt update && apt upgrade -y whatever&& \
-    apt install bash curl -y whatever
+RUN apt-get update && apt-get install bash curl -y
 
 # Change localtime
 RUN cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
