@@ -31,25 +31,24 @@ scrolling_script = """
 
 class FotocasaSpider(scrapy.Spider):
     name = "fotocasa"
-    allowed_domains = ["fotocasa.es"]  
-
+    allowed_domains = ["fotocasa.es"]
 
     
     def start_requests(self):
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
-        logging.info(self.start_urls)
-
-        yield scrapy.Request(self.start_urls,meta={
-                    'playwright': True,
-                    'playwright_page_methods':[
-                    PageMethod("wait_for_selector", '#didomi-notice-agree-button'),
-                    PageMethod("click", '#didomi-notice-agree-button'),
-                    PageMethod("wait_for_selector", "main.re-SearchPage-wrapper"),
-                    PageMethod("evaluate", scrolling_script),
-                    PageMethod("wait_for_selector", "article:nth-child(20)"),  # 10 per page
-                ],   
-                })
-           
+        try:
+            yield scrapy.Request(self.start_urls,meta={
+                        'playwright': True,
+                        'playwright_page_methods':[
+                        PageMethod("wait_for_selector", '#didomi-notice-agree-button'),
+                        PageMethod("click", '#didomi-notice-agree-button'),
+                        PageMethod("wait_for_selector", "main.re-SearchPage-wrapper"),
+                        PageMethod("evaluate", scrolling_script),
+                        PageMethod("wait_for_selector", "article:nth-child(20)"),  # 10 per page
+                    ]
+                    })
+        except:
+            logging.error('Error al obtener datos de fotocasa.es') 
 
     def parse(self, response):
         # Import items

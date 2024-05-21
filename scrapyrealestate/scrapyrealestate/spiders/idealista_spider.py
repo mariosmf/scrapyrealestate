@@ -17,18 +17,19 @@ class IdealistaSpider(scrapy.Spider):
     total_time = 0
     #start_urls = data['idealista_data']['urls']
 
-   
-
 
     def start_requests(self):
 
         #start_urls = [url + '?ordenado-por=fecha-publicacion-desc' for url in self.start_urls]
-        yield scrapy.Request(f'{self.start_urls}',meta={
-                    'playwright': True,
-                    'playwright_page_methods':[
-                    PageMethod("wait_for_selector", 'main.listing-items'),
-                    ]
-                })
+        try:
+            yield scrapy.Request(f'{self.start_urls}',meta={
+                        'playwright': True,
+                        'playwright_page_methods':[
+                        PageMethod("wait_for_selector", 'main.listing-items'),
+                        ]
+                    })
+        except:
+            logging.error('Error al obtener datos de idealista.com')
 
     total_urls_pass = 1  # Inicialitzem contador
 
@@ -44,7 +45,6 @@ class IdealistaSpider(scrapy.Spider):
         default_url = 'https://idealista.com'
         # Passem la resposta a text amb BeautifulSoup
         soup = BeautifulSoup(response.text, 'lxml')
-        logging.warning(f'soup: {soup}')
         # Agafem els div de tots els habitatges de la pàgina
         flats = soup.find_all("div", {"class": "item-info-container"})
         # Obtenim si es de lloguer o compra a partir de la url
