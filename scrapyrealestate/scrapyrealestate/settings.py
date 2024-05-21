@@ -73,7 +73,6 @@ def custom_headers(
 ) -> dict:
     file = open("./data/useragent.txt", "r")
     useragent = file.read()
-    print(useragent)
     file.close()
     
     return {"User-Agent":useragent,
