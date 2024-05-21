@@ -11,7 +11,7 @@ from scrapy_playwright.page import PageMethod
 
 
 scrolling_script = """
-    const scrolls = 20
+    const scrolls = 30
     let scrollCount = 0
     let height = 500
     
@@ -24,7 +24,7 @@ scrolling_script = """
       if (scrollCount === numScrolls) {
         clearInterval(scrollInterval)
       }
-    }, 500)
+    }, 1500)
     """
 
 
@@ -44,7 +44,7 @@ class FotocasaSpider(scrapy.Spider):
                         PageMethod("click", '#didomi-notice-agree-button'),
                         PageMethod("wait_for_selector", "main.re-SearchPage-wrapper"),
                         PageMethod("evaluate", scrolling_script),
-                        PageMethod("wait_for_selector", "article:nth-child(20)"),  # 10 per page
+                        PageMethod("wait_for_selector", "article:nth-child(33)"),  # 10 per page
                     ]
                     })
         except:
