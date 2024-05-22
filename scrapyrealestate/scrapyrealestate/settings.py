@@ -84,6 +84,11 @@ def custom_headers(
 
 PLAYWRIGHT_PROCESS_REQUEST_HEADERS = custom_headers
 
+def should_abort_request(request):
+    return (
+        request.resource_type == "image"
+        or ".jpg" in request.url
+    )
 
 
 
