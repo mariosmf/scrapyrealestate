@@ -15,9 +15,6 @@ scrolling_script = """
     const scrollInterval = setInterval(() => {
       const lastLoadedFlat = document.querySelector('section.re-SearchResult article:last-of-type').scrollIntoView()
       const nextSibling = document.querySelector('section.re-SearchResult article:last-of-type').nextSibling
-      window.scrollTo(0, height)
-      scrollCount++
-      height += 500
     
       if (nextSibling.tagName === 'DIV') {
         clearInterval(scrollInterval)
