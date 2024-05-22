@@ -11,17 +11,15 @@ from scrapy_playwright.page import PageMethod
 
 
 scrolling_script = """
-    const scrolls = 30
-    let scrollCount = 0
-    let height = 500
-    
-    // scroll down and then wait for 0.5s
+
     const scrollInterval = setInterval(() => {
+      const lastLoadedFlat = document.querySelector('section.re-SearchResult article:last-of-type').scrollIntoView()
+      const nextSibling = document.querySelector('section.re-SearchResult article:last-of-type').nextSibling
       window.scrollTo(0, height)
       scrollCount++
       height += 500
     
-      if (scrollCount === numScrolls) {
+      if (nextSibling.tagName === 'DIV') {
         clearInterval(scrollInterval)
       }
     }, 1500)
@@ -44,7 +42,7 @@ class FotocasaSpider(scrapy.Spider):
                         PageMethod("click", '#didomi-notice-agree-button'),
                         PageMethod("wait_for_selector", "main.re-SearchPage-wrapper"),
                         PageMethod("evaluate", scrolling_script),
-                        PageMethod("wait_for_selector", "article:nth-child(33)"),  # 10 per page
+                        PageMethod("wait_for_selector", "article:nth-child(33)")
                     ]
                     })
         except:
