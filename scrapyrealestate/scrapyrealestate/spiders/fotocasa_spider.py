@@ -13,12 +13,15 @@ from scrapy_playwright.page import PageMethod
 scrolling_script = """
 
     const scrollInterval = setInterval(() => {
-      const lastLoadedFlat = document.querySelector('section.re-SearchResult article:last-of-type').scrollIntoView()
-      const nextSibling = document.querySelector('section.re-SearchResult article:last-of-type').nextSibling
+      const lazyFlats = document.querySelectorAll('section.re-SearchResult div.sui-PerfDynamicRendering-placeholder');
+      
     
-      if (nextSibling.tagName === 'DIV') {
+      if (lazyFlats.length === 0) {
         clearInterval(scrollInterval)
+      } else {
+        lazyFlats[0].scrollIntoView();
       }
+
     }, 1500)
     """
 
