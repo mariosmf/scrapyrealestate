@@ -90,7 +90,7 @@ def get_config():
 
 def check_config(db_client, db_name):
     # creem l'objecte per enviar tg
-    tb = telebot.TeleBot('5042109408:AAHBrCsNiuI3lXBEiLjmyxqXapX4h1LHbJs')
+    tb = telebot.TeleBot('8390842486:AAEotcjJfgizKrK9uWi67FWIz_XagSnhPi0')
 
     # Sino existeix el fitxer scrapy.cfg, sortim
     if not path.exists("scrapy.cfg"):
